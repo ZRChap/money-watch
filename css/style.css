@@ -1,0 +1,10 @@
+body {
+    background-image: url('../img/money-watch-background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.table-wrap {
+    margin-top: 80px;
+}
