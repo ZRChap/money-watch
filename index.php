@@ -5,7 +5,7 @@
 <div class="row">
     <form action="">
         <div class="form-group pl-5">
-            <label for="exampleFormControlSelect1">Weekly Income</label>
+            <label for="exampleFormControlSelect1">Choose Week Number</label>
             <select class="form-control" id="exampleFormControlSelect1" >
             <option>1</option>
             <option>2</option>
@@ -13,52 +13,27 @@
             <option>4</option>
             <option>5</option>
             </select>
-
-            <input type="text" class="form-control" id="pay_amount">
         </div>
-    <button type="submit" class="btn btn-primary mb-2 ml-5">Input Pay</button>
-    </form>
-    <form action="">
-        <div class="form-group pl-5">
-            <label for="exampleFormControlSelect1">Bill</label>
-            <select class="form-control" id="exampleFormControlSelect1">
 
-            <!-- Loop thru bills table and list each one in dropdown -->
+        <div class="form-group pl-5">
+            <label for="exampleFormControlSelect1">Select Column</label>
+            <select class="form-control" id="exampleFormControlSelect1">
             
             <?php populate_bill_dropdown($db); ?>
-
-            <option>Add New</option>
+            
+            <option>Save</option>
 
             </select>
 
             <input type="text" class="form-control" id="pay_amount">
         </div>
-    <button type="submit" class="btn btn-primary mb-2 ml-5">Input Bill</button>
+    <button type="submit" class="btn btn-primary mb-2 ml-5">Submit</button>
+    
     </form>
+
 </div>
 
-<?php populate_curr_table_data($db); ?>
-
 <?php include 'current-table.php'; ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

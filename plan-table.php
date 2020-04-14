@@ -9,6 +9,10 @@
 
         <?php populate_table_headers($db); ?>
 
+        <th scope="col">Week Total</th>
+        <th scope="col">Save</th>
+        <th scope="col">Spending Money</th>
+
         </tr>
     </thead>
     <tbody>

@@ -13,13 +13,13 @@ class DB {
         }
     }
 
-    // private static function getInstance() {
-    //     if(!isset(self::$_instance)) {
-    //         self::$_instance = new DB();
-    //     }
+    private static function getInstance() {
+        if(!isset(self::$_instance)) {
+            self::$_instance = new DB();
+        }
 
-    //     return self::$_instance;
-    // }
+        return self::$_instance;
+    }
 
     public function query($sql, $params = []) {
         $this->_error = false;
