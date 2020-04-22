@@ -16,9 +16,9 @@ function populate_table_headers($db) {
 
 }
 
-function populate_plan_table_data_totals($db) {
+function populate_table_data_totals($db) {
 
-    $weeksObj = $db->query('SELECT * FROM plan_week_pay');
+    $weeksObj = $db->query('SELECT * FROM week_pay');
 
     $weeksData = $weeksObj->_result;
     $weeksAmountArr = [];
@@ -105,20 +105,21 @@ function populate_curr_table_data($db) {
             array_push($m_results, $billAmountTotal /4);
         }
 
-        elseif ($value->frequency === "weekly") {
+        if ($value->frequency === "weekly") {
             array_push($w_results, $billAmountTotal);
         }
+        
     }
 
     // Grab another DB Object for weeks
-    $weeks = $db->query('SELECT * FROM plan_week_pay');
+    $weeks = $db->query('SELECT * FROM week_pay');
 
     // Grab _result array from DB object
     $weeks = $weeks->_result;
 
     $weekIncome = [];
 
-    // Push weekly pay amount to array --called $weekIncome array on line 164
+    // Push weekly pay amount to array --called $weekIncome array on line 167
     foreach($weeks as $week) {
         $weekAmount = $week->amount;
         array_push($weekIncome, $weekAmount);
@@ -144,7 +145,6 @@ function populate_curr_table_data($db) {
             array_push($array, $td);
         }
 
-
     }
 
     // Split array into array chunks equal to the amount of bills  present
@@ -165,13 +165,33 @@ function populate_curr_table_data($db) {
     for($x = 0; $x < count($dataArray); $x++) {
         array_push($dataArray[$x], $weekTotals[$x]);
         array_unshift($dataArray[$x], $weekIncome[$x]);
+
+    }
+
+       // Subtract week total from income
+       $difference = [];
+
+       for($x = 0; $x < count($dataArray); $x++) {
+   
+           array_push($difference, ($dataArray[$x][0] - end($dataArray[$x])));
+       }
+
+
+    // Push difference amounts into dataArray
+    for($x = 0; $x < count($dataArray); $x++) {
+        array_push($dataArray[$x], $difference[$x]);
+        
+
     }
 
     // Loop through $dataArray
+    $q = 0;
     foreach($dataArray as $values) {
-        echo "<tr>
-            <th scope='row'>Week</th>";
-         
+        echo "<tr>";
+            
+            $q += 1;            
+           echo "<th scope='row'>Week{$q}</th>";
+            
         
         // Loop through arrays within $dataArray values and inject into table    
         foreach($values as $value) {
@@ -181,9 +201,18 @@ function populate_curr_table_data($db) {
 
         
     }   echo "</tr>";
-        
-     
-    // pnr($dataArray);
-//     pnr($weekTotals);
+
+    //pnr($dataArray);
     
+}
+
+function test() {
+
+$weekNum = $_POST['weekSelect'];
+$weekIncome = $_POST['payAmount'];
+
+echo $weekNum;
+echo '<br />';
+echo $weekIncome;
+echo "check check ckckkc";
 }
