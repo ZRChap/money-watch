@@ -27,11 +27,26 @@ function populate_table_data_totals($db) {
         $weekIncome = $weekAmount->amount;
         array_push($weeksAmountArr, $weekIncome);
         
+        
+    }
+    array_unshift($weeksAmountArr, 0);
+    
+
+    $totals = [];
+
+    for($x = 0; $x < count($weeksAmountArr) -1; $x++) {
+        
+        $currTotal = $weeksAmountArr[$x];
+        $nextTotal = $weeksAmountArr[$x + 1];
+
+        array_push($totals, $nextTotal - $currTotal);
+        
     }
 
-    $weekAmountTotal = array_sum($weeksAmountArr);
+    $weekAmountTotal = array_sum($totals);
     
     echo "<td>{$weekAmountTotal}</td>";
+
 
     $bills = $db->query('SELECT * FROM bills ORDER BY frequency');
     
@@ -204,15 +219,4 @@ function populate_curr_table_data($db) {
 
     //pnr($dataArray);
     
-}
-
-function test() {
-
-$weekNum = $_POST['weekSelect'];
-$weekIncome = $_POST['payAmount'];
-
-echo $weekNum;
-echo '<br />';
-echo $weekIncome;
-echo "check check ckckkc";
 }
