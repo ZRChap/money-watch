@@ -8,3 +8,9 @@ body {
 .table-wrap {
     margin-top: 80px;
 }
+
+#billsTable {
+    background-color: rgb(241, 177, 177);
+    border: 1px solid black;
+    font-size: 1.5rem;
+}
