@@ -216,7 +216,24 @@ function populate_curr_table_data($db) {
 
         
     }   echo "</tr>";
-
-    //pnr($dataArray);
     
+}
+
+function displayBillsTable ($db) {
+
+    $billsObj = $db->query("SELECT * FROM bills");
+ 
+    $billData = $billsObj->_result;
+ 
+    foreach($billData as $bills) {
+       echo 
+ 
+       "<div class='row' id='billsTable'>
+          <div class='col'>{$bills->name}</div>
+          <div class='col'>{$bills->amount}</div>
+          <div class='col'>{$bills->due_date}</div>
+          <div class='col'>{$bills->frequency}</div>
+       </div>";
+    }
+
 }
