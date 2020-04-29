@@ -2,35 +2,37 @@
 
 <div class="container">
    <div class="row">
-      <div class="col">
-         <form action="#">
-            <h2 class="mb-3">Enter New Bill</h2>
-            <label for="billName" class="label">Bill Name</label>
+      <div class="col-sm-4">
+         <form action="handlers/billsHandler.php" method="POST" name="bills-form">
+
+            <h2 class="mb-3">Bills</h2>
+
+            <label for="billSelect" class="label">New or Edit</label>
+            <select class="form-control mb-2" id="billSelect" name="billSelect" >
+               <option>New Bill</option>
+               <option>Edit Bill</option>
+            </select>
+
+            <label for="billName" class="label">Name</label>
             <input type="text" class="form-control mb-2" name="billName"></input>
-            <label for="billName" class="label">Bill Amount</label>
+
+            <label for="billName" class="label">Amount</label>
             <input type="text" class="form-control mb-2" name="billAmount"></input>
-            <label for="billName" class="label">Bill Frequency</label>
-            <input type="text" class="form-control mb-4" name="billFrequency"></input>
+
+            <label for="billName" class="label">Frequency</label>
+            <select class="form-control mb-2" id="frequencySelect" name="frequencySelect" >
+               <option>Weekly</option>
+               <option>Monthly</option>
+            </select>
+
             <label for="billName" class="label">Due Date</label>
             <input type="date" class="form-control mb-4" name="dueDate"></input>
+
+            <button type="submit" name="billSubmit" class="btn btn-primary mb-4">Submit</button>
+
          </form>
       </div>
 
-      <div class="col"></div>
-
-         <div class="col">
-            <form action="#">
-               <h2 class="mb-3">Update Current Bill</h2>
-               <label for="billName" class="label">Bill Name</label>
-               <input type="text" class="form-control mb-2" name="billName"></input>
-               <label for="billName" class="label">Bill Amount</label>
-               <input type="text" class="form-control mb-2" name="billAmount"></input>
-               <label for="billName" class="label">Bill Frequency</label>
-               <input type="text" class="form-control mb-4" name="billFrequency"></input>
-               <label for="billName" class="label">Due Date</label>
-               <input type="date" class="form-control mb-4" name="dueDate"></input>
-            </form>
-         </div>
    </div>
   
 

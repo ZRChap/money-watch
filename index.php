@@ -4,19 +4,24 @@
 
     <div class="row">
         <form action="handlers/indexHandler.php" method="POST" name="indexForm">
+        
             <div class="form-group pl-5">
-                <label for="exampleFormControlSelect1" class="label">Week</label>
-                <select class="form-control" id="exampleFormControlSelect1" name="weekSelect" >
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+
+                <label for="weekSelect" class="label mt-2">Week</label>
+                <select class="form-control mb-2" id="weekSelect" name="weekSelect" >
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
                 </select>
+
                 <label for="pay_amount" class="label">Amount</label>
                 <input type="text" class="form-control" id="pay_amount" name="payAmount">
+
             </div>
-        <button type="submit" name="indexSubmit" class="btn btn-primary mb-2 ml-5">Submit</button>
+
+            <button type="submit" name="indexSubmit" class="btn btn-primary mb-2 ml-5">Submit</button>
         
         </form>
 
