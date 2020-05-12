@@ -22,3 +22,12 @@ body {
     background-color: rgb(199, 194, 194);
     padding: 5px;
 }
+
+.largerBox {
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+

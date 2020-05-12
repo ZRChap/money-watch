@@ -229,10 +229,11 @@ function displayBillsTable ($db) {
        echo 
  
        "<div class='row' id='billsTable'>
-          <div class='col'>{$bills->name}</div>
-          <div class='col'>{$bills->amount}</div>
-          <div class='col'>{$bills->due_date}</div>
-          <div class='col'>{$bills->frequency}</div>
+            <div class='checkBoxWrap'><input type='checkbox' class='largerBox' name='billsCheckbox[]' value='{$bills->id}'></div>
+            <div class='col'>{$bills->name}</div>
+            <div class='col'>{$bills->amount}</div>
+            <div class='col'>{$bills->due_date}</div>
+            <div class='col'>{$bills->frequency}</div>
        </div>";
     }
 
