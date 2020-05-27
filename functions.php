@@ -1,22 +1,36 @@
 <?php
 
-function populate_table_headers($db) {
+function populate_table_headers($db, $table) {
 
     $bills = $db->query('SELECT * FROM bills ORDER BY frequency');
 
     $data = $bills->_result;
 
     foreach($data as $value) {
+
         $billName = $value->name;
-        if($billName) {
-            echo "<th scope='col'>{$billName}</th>";
-        
+        $billStatus = $value->status;
+
+        if($table === "current" ) {
+
+            if($billName && $billStatus === "current") {
+                echo "<th scope='col'>{$billName}</th>";
+            
+            }
+
+        } elseif ($table === "plan") {
+
+            if($billName && $billStatus === "current" || $billStatus === "plan") {
+                echo "<th scope='col'>{$billName}</th>";
+            
+            }
         }
+        
     }
 
 }
 
-function populate_table_data_totals($db) {
+function populate_table_data_totals($db, $table) {
 
     $weeksObj = $db->query('SELECT * FROM week_pay');
 
@@ -53,37 +67,39 @@ function populate_table_data_totals($db) {
     $billData = $bills->_result;
 
     foreach($billData as $value) {
+
         $billAmountTotal = $value->amount;
-        if($value->frequency === "weekly") {
-            $billAmount = $billAmountTotal * 4;
-            echo "<td>{$billAmount}</td>";
+        $billStatus = $value->status;
+
+        if($table === "current") {
+
+            if($value->frequency === "weekly" && $billStatus === "current") {
+                $billAmount = $billAmountTotal * 4;
+                echo "<td>{$billAmount}</td>";
+            }
+
+            else if($value->frequency === "monthly" && $billStatus === "current") {
+                $billAmount = $billAmountTotal;
+                echo "<td>{$billAmount}</td>";
+            
+            }
+
+        } elseif($table === "plan") {
+
+            if($value->frequency === "weekly" && $billStatus === "current" || $billStatus === "plan") {
+                $billAmount = $billAmountTotal ;
+                echo "<td>{$billAmount}</td>";
+            }
+
+            else if($value->frequency === "monthly" && $billStatus === "current" || $billStatus === "plan") {
+                $billAmount = $billAmountTotal ;
+                echo "<td>{$billAmount}</td>";
+            
+            }
         }
-        else if($value->frequency === "monthly") {
-            $billAmount = $billAmountTotal ;
-            echo "<td>{$billAmount}</td>";
+
         
-        }
-    }
-}
- 
-
-function populate_plan_table_data($db) {
-
-    $bills = $db->query('SELECT * FROM bills ORDER BY frequency');
-
-    $billData = $bills->_result;
-
-    foreach($billData as $value) {
-        $billAmountTotal = $value->amount;
-        if($value->frequency === "weekly") {
-            $billAmount = $billAmountTotal;
-            echo "<td>{$billAmount}</td>";
-        }
-        else if($value->frequency === "monthly") {
-            $billAmount = $billAmountTotal / 4;
-            echo "<td>{$billAmount}</td>";
         
-        }
     }
 }
 
@@ -96,11 +112,9 @@ function populate_bill_dropdown($db) {
             echo "<option>{$billName}</option>";
         }
     }
-    
-
 }
 
-function populate_curr_table_data($db) {
+function populate_table_data($db, $table) {
     
     // Grab DB object
     $bills = $db->query('SELECT * FROM bills ORDER BY frequency');
@@ -115,19 +129,41 @@ function populate_curr_table_data($db) {
     // Loop through _result array and push monthly and weekly bills into seperate arrays
     // Monthly bills are divided by 4 weeks for weekly budgeting
     foreach($billData as $value) {
-        $billAmountTotal = $value->amount;  
-        if ($value->frequency === "monthly") {
-            array_push($m_results, $billAmountTotal /4);
-        }
 
-        if ($value->frequency === "weekly") {
-            array_push($w_results, $billAmountTotal);
-        }
-        
+        $billAmountTotal = $value->amount;  
+        $billStatus = $value->status;
+
+        if($table === "current") {
+            
+            if ($value->frequency === "monthly" && $billStatus === "current") {
+                array_push($m_results, $billAmountTotal /4);
+            }
+    
+            if ($value->frequency === "weekly" && $billStatus === "current") {
+                array_push($w_results, $billAmountTotal);
+            }
+
+        } elseif($table === "plan") {
+
+            if ($value->frequency === "monthly" && ($billStatus === "current" || $billStatus === "plan")) {
+                array_push($m_results, $billAmountTotal /4);
+            }
+    
+            if ($value->frequency === "weekly" && ($billStatus === "current" || $billStatus === "plan")) {
+                array_push($w_results, $billAmountTotal);
+            }
+        }     
     }
 
     // Grab another DB Object for weeks
-    $weeks = $db->query('SELECT * FROM week_pay');
+    if($table === "current") {
+
+        $weeks = $db->query('SELECT * FROM week_pay');
+
+    } elseif ($table === "plan") {
+
+        $weeks = $db->query('SELECT * FROM plan_pay');
+    }
 
     // Grab _result array from DB object
     $weeks = $weeks->_result;
@@ -150,8 +186,17 @@ function populate_curr_table_data($db) {
     for($i = 0; $i < count($weeks); $i++) {
 
         for($x = 0; $x < count($m_results); $x++) {
-            $td = $m_results[$x] * ($i + 1);
-            array_push($array, $td);
+            if($table === "current") {
+
+                $td = $m_results[$x] * ($i + 1);
+                array_push($array, $td);
+
+            } elseif ($table === "plan") {
+
+                $td = $m_results[$x];
+                array_push($array, $td);
+            }
+            
 
         }
 
@@ -219,21 +264,21 @@ function populate_curr_table_data($db) {
     
 }
 
-function displayBillsTable ($db) {
+function displayTable ($db, $table) {
 
-    $billsObj = $db->query("SELECT * FROM bills");
+    $dataObj = $db->query("SELECT * FROM {$table}");
  
-    $billData = $billsObj->_result;
+    $tableData = $dataObj->_result;
  
-    foreach($billData as $bills) {
+    foreach($tableData as $data) {
        echo 
  
-       "<div class='row' id='billsTable'>
-            <div class='checkBoxWrap'><input type='checkbox' class='largerBox' name='billsCheckbox[]' value='{$bills->id}'></div>
-            <div class='col'>{$bills->name}</div>
-            <div class='col'>{$bills->amount}</div>
-            <div class='col'>{$bills->due_date}</div>
-            <div class='col'>{$bills->frequency}</div>
+       "<div class='row' id={$table}" . "Table>
+            <div class='checkBoxWrap'><input type='checkbox' class='largerBox' name='billsCheckbox[]' value='{$data->id}'></div>
+            <div class='col'>{$data->name}</div>
+            <div class='col'>{$data->amount}</div>
+            <div class='col'>{$data->due_date}</div>
+            <div class='col'>{$data->frequency}</div>
        </div>";
     }
 

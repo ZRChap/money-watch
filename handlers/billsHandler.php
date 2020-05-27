@@ -24,20 +24,21 @@ if(isset($_POST['billSubmit'])) {
 
         $data = $db->query("SELECT * FROM bills WHERE name = '$name'");
         $bill = $data->_result;
-        
-        
-        // $db->insert('bills',[
-        //     'name' => "{$name}",
-        //     'amount' => "{$amount}",
-        //     'due_date' => "{$date}",
-        //     'frequency' => "{$frequency}"
-        // ]);
 
-        //header('location: http://localhost/moneyWatch/bills.php');
+        foreach($bill as $value) {
+            $id = $value->id;
+        }
+        
+       $db->update('bills', $id, [
+        'amount' => "{$amount}",
+        'due_date' => "{$date}",
+        'frequency' => "{$frequency}"
+        ]);
+
+        header('location: http://localhost/moneyWatch/bills.php');
 
        
     } 
-
 
 }
 
@@ -46,7 +47,7 @@ if(isset($_POST['deleteSubmit'])) {
 
     $checked = $_POST['billsCheckbox'];
 
-    for($i=0; $i < count($checked); $i++) {
+    for($i = 0; $i < count($checked); $i++) {
         $db->query( "DELETE FROM bills WHERE id = '$checked[$i]' ");
     }
 

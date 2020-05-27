@@ -8,7 +8,8 @@
             <div class="form-group pl-5">
 
                 <label for="weekSelect" class="label mt-2">Week</label>
-                <select class="form-control mb-2" id="weekSelect" name="weekSelect" >
+
+                <select class="form-control mb-2" id="weekSelect" name="weekSelect">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -27,7 +28,7 @@
 
     </div>
 
-    <?php include 'current-table.php'; ?>
+    <?php include 'curr-table.php'; ?>
 
 
 

@@ -6,7 +6,7 @@
         <th scope="col">#</th>
         <th scope="col">Income</th>
 
-        <?php populate_table_headers($db); ?>
+        <?php populate_table_headers($db, "current"); ?>
 
         <th scope="col">Week Total</th>
         <th scope="col">Spending Money</th>
@@ -14,13 +14,13 @@
         </tr>
     </thead>
     <tbody>
-        <?php populate_curr_table_data($db); ?>
+        <?php populate_table_data($db, "current"); ?>
 
         <tr>
         
         <th scope="row">Totals</th>
 
-        <?php populate_table_data_totals($db); ?>
+        <?php populate_table_data_totals($db, "current"); ?>
 
         </tr>
     </tbody>

@@ -1,5 +1,5 @@
 body {
-    background-image: url('../img/money-watch-background.jpg');
+    background-image: url('../img/background-1.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -10,6 +10,12 @@ body {
 }
 
 #billsTable {
+    background-color: rgb(199, 194, 194);
+    border: 1px solid black;
+    font-size: 1.5rem;
+}
+
+#debtTable {
     background-color: rgb(199, 194, 194);
     border: 1px solid black;
     font-size: 1.5rem;
