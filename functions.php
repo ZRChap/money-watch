@@ -264,22 +264,27 @@ function populate_table_data($db, $table) {
     
 }
 
-function displayTable ($db, $table) {
+function dispTable ($db, $table, $params = []) {
 
     $dataObj = $db->query("SELECT * FROM {$table}");
  
     $tableData = $dataObj->_result;
- 
-    foreach($tableData as $data) {
-       echo 
- 
-       "<div class='row' id={$table}" . "Table>
-            <div class='checkBoxWrap'><input type='checkbox' class='largerBox' name='billsCheckbox[]' value='{$data->id}'></div>
-            <div class='col'>{$data->name}</div>
-            <div class='col'>{$data->amount}</div>
-            <div class='col'>{$data->due_date}</div>
-            <div class='col'>{$data->frequency}</div>
-       </div>";
+
+    if($params) {
+
+        foreach($tableData as $data) {
+            echo "<div class='row' id={$table}" . "Table>
+            <div class='checkBoxWrap'><input type='checkbox' class='largerBox' name='{$table}" . "Checkbox[]' value='{$data->id}'></div>";
+                foreach($params as $param) {
+                    echo "
+                    
+                    <div class='col'>{$data->$param}</div>"; 
+
+                };
+
+            echo "</div>";    
+        }
+        
     }
 
 }

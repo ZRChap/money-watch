@@ -46,7 +46,12 @@
   
    <form action="handlers/billsHandler.php" method="POST" name="bills-form">
 
-   <?php displayTable ($db, "bills") ?>
+   <?php dispTable($db, "bills", [
+    'name',
+    'amount',
+    'due_date',
+    'frequency'
+   ]); ?>
 
       <div>
             <button type="submit" name="deleteSubmit" class="btn btn-danger mt-4 mb-4">Delete</button>
